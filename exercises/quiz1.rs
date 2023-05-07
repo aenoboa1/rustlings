@@ -1,4 +1,3 @@
-// quiz1.rs
 // This is a quiz for the following sections:
 // - Variables
 // - Functions
@@ -10,10 +9,22 @@
 // Write a function that calculates the price of an order of apples given
 // the quantity bought. No hints this time!
 
-// I AM NOT DONE
 
 // Put your function here!
-// fn calculate_price_of_apples {
+fn calculate_price_of_apples(apple: i32) -> i32{
+    let mut apple_cost = 2;
+
+    if( apple > 40){
+        {
+            apple_cost = 1;
+            return apple*apple_cost;
+        }
+    }
+
+    return apple_cost*apple;
+
+}
+
 
 // Don't modify this function!
 #[test]
