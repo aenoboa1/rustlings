@@ -14,8 +14,6 @@
 
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 use std::collections::HashMap;
 
 // A structure to store team name and its goal details.
@@ -30,11 +28,71 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
     let mut scores: HashMap<String, Team> = HashMap::new();
 
     for r in results.lines() {
+        // get the scores from the results string
         let v: Vec<&str> = r.split(',').collect();
         let team_1_name = v[0].to_string();
         let team_1_score: u8 = v[2].parse().unwrap();
         let team_2_name = v[1].to_string();
         let team_2_score: u8 = v[3].parse().unwrap();
+
+
+        //print!("{} : {} \n ", team_1_name,team_1_score);
+        //print!("{} : {} \n ", team_2_name,team_2_score);
+
+
+
+        // initializae 'team 1'
+        let team1 = Team{
+            name: team_1_name.clone(),
+            goals_scored:0,
+            goals_conceded:0
+        };
+        // initialize 'team 2'
+
+        let team2 = Team{
+            name: team_2_name.clone(),
+            goals_scored:0,
+            goals_conceded:0
+        };
+
+        scores.entry((*team1.name).to_string())
+            .and_modify(
+                |e|
+                {
+                    e.goals_scored += team_1_score;
+                    e.goals_conceded += team_2_score;
+                }
+            )
+            .or_insert(
+            Team{
+                // Insert team name into struct
+                name:team_1_name.clone(),
+                goals_scored: team_1_score,
+                goals_conceded : team_2_score
+                }
+            );
+
+
+
+
+        scores.entry((*team2.name).to_string())
+            .and_modify(
+                |e|
+                {
+                    e.goals_scored += team_2_score;
+                    e.goals_conceded += team_1_score;
+                }
+            )
+            .or_insert(
+            Team{
+                // Insert team name into struct
+                name:team_2_name.clone(),
+                goals_scored: team_2_score,
+                goals_conceded : team_1_score
+                }
+            );
+
+
         // TODO: Populate the scores table with details extracted from the
         // current line. Keep in mind that goals scored by team_1
         // will be the number of goals conceded from team_2, and similarly
